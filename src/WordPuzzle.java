@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class WordPuzzle {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        
         System.out.println("COEPOE WORD PUZZLE");
         System.out.println("=================== \n");
         System.out.println("Rules :");
@@ -23,12 +24,14 @@ public class WordPuzzle {
         System.out.println("2. Each level, you have 10 chances to answer correctly");
         System.out.println("3. To get through to next level, you have to score 70 Points each level");
         System.out.println("\n");
-
+        
         String[][] words = {
             {"d", "e", "t", "t", "l", "i"},
             {"s", "e", "c", "a", "e", "n"},
             {"h", "k", "r", "n", "e", "o"}
         };
+        
+        int score = 0;
         ArrayList<String> usedWords = new ArrayList<String>();
 
         for (int i = 0; i < words.length; i++) {
@@ -48,8 +51,24 @@ public class WordPuzzle {
                 } else if (!Arrays.asList(words[i]).containsAll(Arrays.asList(answer.split("")))) {
                     System.out.println("Answers can't contain any letters other than the ones provided");
                     j--;
+                } else if (usedWords.contains(answer)) {
+                    System.out.println("You had already type this word before..");
+                    
+                } else {
+                    usedWords.add(answer);
+                    score += 10;
+                    System.out.println("#RIght. Score : " + score);
                 }
                 System.out.println();
+            }
+            System.out.println("Total Your Score : " + score + "\n");
+            
+            if (score < 70) {
+                System.out.println("Sorry, you can't continue to the next level");
+                System.exit(0);
+            } else {
+                usedWords.clear();
+                score = 0;
             }
         }
     }
